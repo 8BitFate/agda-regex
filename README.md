@@ -11,6 +11,7 @@ Implementing a derivate based regular expression engine in Agda
 [Regular Expression Matching using Partial
 Derivatives](https://www.researchgate.net/publication/242776767_Regular_Expression_Matching_using_Partial_Derivatives)
 
+[Succinctness of the Complement and Intersection of Regular Expressions](https://www.cs.umd.edu/users/gasarch/TOPICS/desc/regexpcompint.pdf)
 [Certified Derivative-Based Parsing of Regular Expressions](https://homepages.dcc.ufmg.br/~camarao/certified-parsing-regex.pdf)
 
 [Dependently Typed Programming with Finite Sets](https://firsov.ee/finset/finset.pdf)
