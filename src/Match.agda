@@ -7,7 +7,6 @@ module Match {Σ : Set} (Φ : Finite Σ)  where
 
 open import RegEx Φ 
 open import SmartConstructor Φ
-open import Complement Φ 
 
 open import Data.List using (List;[];_∷_;[_];_++_)
 

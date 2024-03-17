@@ -30,9 +30,7 @@ FiniteAB = record { eq = _≟_ ; list = a ∷ b ∷ [] ; noDups = ((λ ()) ∷ [
 
 open import RegEx FiniteAB
 open import SmartConstructor FiniteAB
-open import Complement FiniteAB
+open import SmartConstructor.Properties FiniteAB
 open import Match FiniteAB
 
 test = ⟦ a ⟧ ∙ ⟦ b ⟧
-
-test2 = complement test
