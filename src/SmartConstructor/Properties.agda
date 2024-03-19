@@ -1,3 +1,5 @@
+{-# OPTIONS --sized-types #-}
+
 open import Relation.Nullary using (Dec)
 open import Relation.Binary.PropositionalEquality using (_≡_)
 

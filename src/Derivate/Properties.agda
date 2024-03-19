@@ -1,3 +1,5 @@
+{-# OPTIONS --sized-types #-}
+
 open import Relation.Nullary using (Dec)
 open import Relation.Binary.PropositionalEquality using (_≡_;_≢_)
 
@@ -13,7 +15,7 @@ open import Relation.Nullary using (yes;no)
 open import Relation.Binary.PropositionalEquality using (refl;subst;cong)
 open import Data.Empty using (⊥-elim)
 open import Data.Product using (_×_;_,_;∃;-,_) renaming (Σ to Sigma;proj₁ to fst;proj₂ to snd)
-
+open import Size
 
 open import RegEx Φ
 open import SmartConstructor Φ
@@ -41,7 +43,7 @@ derivate-sound {l ∙ r} {c} m | no ¬p with ∙ˢ-sound {derivate c l} m
 derivate-sound {l & r} {c} m with &ˢ-sound m
 ... | and ln rn = and (derivate-sound ln) (derivate-sound rn)
 
-derivate-complete : {r : RegEx}{c : Σ}{s : List Σ} → r ~ (c ∷ s) → (derivate c r) ~ s
+derivate-complete : {r : RegEx}{c : Σ}{s : List Σ}{i : Size} → _~_ {i} r (c ∷ s) → (derivate c r) ~ s
 derivate-complete {⟦ x ⟧} {c} {[]} m with c ≟ x
 ... | yes refl = eps
 derivate-complete {⟦ x ⟧} {.x} {[]} chr | no ¬p = ⊥-elim (¬p refl)
