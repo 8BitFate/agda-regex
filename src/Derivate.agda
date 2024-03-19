@@ -3,12 +3,15 @@ open import Relation.Binary.PropositionalEquality using (_≡_;_≢_)
 
 open import Finite using (Finite)
 
-module Der {Σ : Set} (Φ : Finite Σ) where
+module Derivate {Σ : Set} (Φ : Finite Σ) where
+
+open Finite.Finite Φ 
 
 open import RegEx Φ
 open import SmartConstructor Φ
 open import SmartConstructor.Properties Φ
 open import Match Φ
+open import Match.Properties Φ
 
 open import Data.List using (List;[];_∷_;[_])
 open import Data.Sum using (reduce) renaming (map to sumMap)
@@ -34,3 +37,16 @@ nullable (l & r) with nullable l | nullable r
 ... | yes lp | yes rp = yes (and lp rp)
 ... | yes lp | no ¬rp = no (¬rp ∘ snd ∘ &~[])
 ... | no ¬lp | rp = no (¬lp ∘ fst ∘ &~[])
+
+derivate : Σ → RegEx → RegEx
+derivate c ∅ = ∅
+derivate c ε = ∅
+derivate c ⟦ x ⟧ with c ≟ x
+... | yes _ = ε
+... | no  _ = ∅
+derivate c (r *) = (derivate c r) ∙ˢ (r *ˢ)
+derivate c (l + r) = (derivate c l) +ˢ (derivate c r)
+derivate c (l ∙ r) with nullable l
+... | yes _ = ((derivate c l) ∙ˢ r) +ˢ (derivate c r)
+... | no  _ = (derivate c l) ∙ˢ r
+derivate c (l & r) = (derivate c l) &ˢ (derivate c r)

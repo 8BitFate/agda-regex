@@ -12,7 +12,7 @@ AllElements {A} xs = (x : A) → x ∈ xs
 
 record Finite (A : Set) : Set where
   field
-    eq : (a : A) → (b : A) → Dec (a ≡ b) 
+    _≟_ : (a : A) → (b : A) → Dec (a ≡ b) 
     list : List A
-    noDups : Unique eq list
+    noDups : Unique _≟_ list
     every : AllElements list

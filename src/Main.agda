@@ -32,5 +32,8 @@ open import RegEx FiniteAB
 open import SmartConstructor FiniteAB
 open import SmartConstructor.Properties FiniteAB
 open import Match FiniteAB
+open import Match.Properties FiniteAB
+open import Derivate FiniteAB
+open import Derivate.Properties
 
 test = ⟦ a ⟧ ∙ ⟦ b ⟧

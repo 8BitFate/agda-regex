@@ -25,15 +25,15 @@ open import Match Φ
 *ˢ-sound {_ & _} m = m
 
 *ˢ-comp : {r : RegEx}{s : List Σ} → r * ~ s → r *ˢ ~ s
-*ˢ-comp {∅}     (star (altl m)) = m
+*ˢ-comp {∅}     (star (altl m))           = m
 *ˢ-comp {∅}     (star (altr (con () m)))
-*ˢ-comp {ε}     (star (altl m)) = m
+*ˢ-comp {ε}     (star (altl m))           = m
 *ˢ-comp {ε}     (star (altr (con eps m))) = *ˢ-comp m
-*ˢ-comp {⟦ _ ⟧} m = m
-*ˢ-comp {_ *}   m = m
-*ˢ-comp {_ + _} m = m
-*ˢ-comp {_ ∙ _} m = m
-*ˢ-comp {_ & _} m = m
+*ˢ-comp {⟦ _ ⟧} m                         = m
+*ˢ-comp {_ *}   m                         = m
+*ˢ-comp {_ + _} m                         = m
+*ˢ-comp {_ ∙ _} m                         = m
+*ˢ-comp {_ & _} m                         = m
 
 ∙ˢ-sound : {l r : RegEx}{s : List Σ} → l ∙ˢ r ~ s → l ∙ r ~ s
 ∙ˢ-sound {ε}       {ε}     m = con eps m
