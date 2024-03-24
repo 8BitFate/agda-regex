@@ -13,6 +13,7 @@ open import SmartConstructor.Properties Φ
 open import Match Φ
 open import Match.Properties Φ
 
+open import Relation.Binary.PropositionalEquality using (refl)
 open import Data.List using (List;[];_∷_;[_])
 open import Data.Sum using (reduce) renaming (map to sumMap)
 open import Relation.Nullary using (yes;no)
@@ -26,7 +27,7 @@ nullable ε = yes eps
 nullable ⟦ x ⟧ = no (λ ())
 nullable (r *) = yes (star (altl eps))
 nullable (l ∙ r) with nullable l | nullable r
-... | yes lp | yes rp = yes (con lp rp)
+... | yes lp | yes rp = yes (con lp rp refl)
 ... | yes lp | no ¬rp = no (¬rp ∘ snd ∘ ∙~[])
 ... | no ¬lp | rp = no (¬lp ∘ fst ∘ ∙~[])
 nullable (l + r) with nullable l | nullable r

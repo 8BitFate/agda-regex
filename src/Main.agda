@@ -26,7 +26,7 @@ every a = here refl
 every b = there (here refl)
 
 FiniteAB : Finite AB
-FiniteAB = record { eq = _≟_ ; list = a ∷ b ∷ [] ; noDups = ((λ ()) ∷ []) ∷ [] ∷ [] ; every = every }
+FiniteAB = record { _≟_ = _≟_ ; list = a ∷ b ∷ [] ; noDups = ((λ ()) ∷ []) ∷ [] ∷ [] ; every = every }
 
 open import RegEx FiniteAB
 open import SmartConstructor FiniteAB
@@ -34,6 +34,6 @@ open import SmartConstructor.Properties FiniteAB
 open import Match FiniteAB
 open import Match.Properties FiniteAB
 open import Derivate FiniteAB
-open import Derivate.Properties
+open import Derivate.Properties FiniteAB
 
 test = ⟦ a ⟧ ∙ ⟦ b ⟧

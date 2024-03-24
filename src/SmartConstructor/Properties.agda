@@ -26,9 +26,9 @@ open import Match Φ
 
 *ˢ-comp : {r : RegEx}{s : List Σ} → r * ~ s → r *ˢ ~ s
 *ˢ-comp {∅}     (star (altl m))           = m
-*ˢ-comp {∅}     (star (altr (con () m)))
+*ˢ-comp {∅}     (star (altr (con () _ _)))
 *ˢ-comp {ε}     (star (altl m))           = m
-*ˢ-comp {ε}     (star (altr (con eps m))) = *ˢ-comp m
+*ˢ-comp {ε}     (star (altr (con eps m refl))) = *ˢ-comp m
 *ˢ-comp {⟦ _ ⟧} m                         = m
 *ˢ-comp {_ *}   m                         = m
 *ˢ-comp {_ + _} m                         = m
@@ -36,37 +36,37 @@ open import Match Φ
 *ˢ-comp {_ & _} m                         = m
 
 ∙ˢ-sound : {l r : RegEx}{s : List Σ} → l ∙ˢ r ~ s → l ∙ r ~ s
-∙ˢ-sound {ε}       {ε}     m = con eps m
-∙ˢ-sound {ε}       {⟦ _ ⟧} m = con eps m
-∙ˢ-sound {ε}       {_ *}   m = con eps m
-∙ˢ-sound {ε}       {_ + _} m = con eps m
-∙ˢ-sound {ε}       {_ ∙ _} m = con eps m
-∙ˢ-sound {ε}       {_ & _} m = con eps m
-∙ˢ-sound {⟦ c ⟧}   {ε} {s} m = subst (_~_ (⟦ c ⟧ ∙ ε)) (++-identityʳ s) (con m eps)
+∙ˢ-sound {ε}       {ε}     m = con eps m refl
+∙ˢ-sound {ε}       {⟦ _ ⟧} m = con eps m refl
+∙ˢ-sound {ε}       {_ *}   m = con eps m refl
+∙ˢ-sound {ε}       {_ + _} m = con eps m refl
+∙ˢ-sound {ε}       {_ ∙ _} m = con eps m refl
+∙ˢ-sound {ε}       {_ & _} m = con eps m refl
+∙ˢ-sound {⟦ c ⟧}   {ε} {s} m = subst (_~_ (⟦ c ⟧ ∙ ε)) (++-identityʳ s) (con m eps refl)
 ∙ˢ-sound {⟦ _ ⟧}   {⟦ _ ⟧} m = m
 ∙ˢ-sound {⟦ _ ⟧}   {_ *}   m = m
 ∙ˢ-sound {⟦ _ ⟧}   {_ + _} m = m
 ∙ˢ-sound {⟦ _ ⟧}   {_ ∙ _} m = m
 ∙ˢ-sound {⟦ _ ⟧}   {_ & _} m = m 
-∙ˢ-sound {l *}     {ε} {s} m = subst (_~_ (l * ∙ ε)) (++-identityʳ s) (con m eps)
+∙ˢ-sound {l *}     {ε} {s} m = subst (_~_ (l * ∙ ε)) (++-identityʳ s) (con m eps refl )
 ∙ˢ-sound {_ *}     {⟦ _ ⟧} m = m
 ∙ˢ-sound {_ *}     {_ *}   m = m
 ∙ˢ-sound {_ *}     {_ + _} m = m
 ∙ˢ-sound {_ *}     {_ ∙ _} m = m
 ∙ˢ-sound {_ *}     {_ & _} m = m
-∙ˢ-sound {l1 + l2} {ε} {s} m = subst (_~_ ((l1 + l2) ∙ ε)) (++-identityʳ s) (con m eps)
+∙ˢ-sound {l1 + l2} {ε} {s} m = subst (_~_ ((l1 + l2) ∙ ε)) (++-identityʳ s) (con m eps refl)
 ∙ˢ-sound {_ + _}   {⟦ _ ⟧} m = m
 ∙ˢ-sound {_ + _}   {_ *}   m = m
 ∙ˢ-sound {_ + _}   {_ + _} m = m
 ∙ˢ-sound {_ + _}   {_ ∙ _} m = m
 ∙ˢ-sound {_ + _}   {_ & _} m = m
-∙ˢ-sound {l1 ∙ l2} {ε} {s} m = subst (_~_ (l1 ∙ l2 ∙ ε)) (++-identityʳ s) (con m eps)
+∙ˢ-sound {l1 ∙ l2} {ε} {s} m = subst (_~_ (l1 ∙ l2 ∙ ε)) (++-identityʳ s) (con m eps refl)
 ∙ˢ-sound {_ ∙ _}   {⟦ _ ⟧} m = m
 ∙ˢ-sound {_ ∙ _}   {_ *}   m = m
 ∙ˢ-sound {_ ∙ _}   {_ + _} m = m
 ∙ˢ-sound {_ ∙ _}   {_ ∙ _} m = m
 ∙ˢ-sound {_ ∙ _}   {_ & _} m = m
-∙ˢ-sound {l1 & l2} {ε} {s} m = subst (_~_ ((l1 & l2) ∙ ε)) (++-identityʳ s) (con m eps)
+∙ˢ-sound {l1 & l2} {ε} {s} m = subst (_~_ ((l1 & l2) ∙ ε)) (++-identityʳ s) (con m eps refl)
 ∙ˢ-sound {_ & _}   {⟦ _ ⟧} m = m
 ∙ˢ-sound {_ & _}   {_ *}   m = m
 ∙ˢ-sound {_ & _}   {_ ∙ _} m = m
@@ -74,43 +74,43 @@ open import Match Φ
 ∙ˢ-sound {_ & _}   {_ & _} m = m
 
 ∙ˢ-comp : {l r : RegEx}{s : List Σ} → l ∙ r ~ s → l ∙ˢ r ~ s
-∙ˢ-comp {∅}       {_}     (con () _)
-∙ˢ-comp {ε}       {ε}     (con eps m) = m
-∙ˢ-comp {ε}       {⟦ _ ⟧} (con eps m) = m
-∙ˢ-comp {ε}       {_ *}   (con eps m) = m
-∙ˢ-comp {ε}       {_ + _} (con eps m) = m
-∙ˢ-comp {ε}       {_ ∙ _} (con eps m) = m
-∙ˢ-comp {ε}       {_ & _} (con eps m) = m
-∙ˢ-comp {⟦ _ ⟧}   {∅}     (con m ()) 
-∙ˢ-comp {⟦ c ⟧}   {ε}     (con {s} m eps) = subst (_~_ ⟦ c ⟧) (sym (++-identityʳ s))  m
+∙ˢ-comp {∅}       {_}     (con () _ _)
+∙ˢ-comp {ε}       {ε}     (con eps m refl) = m
+∙ˢ-comp {ε}       {⟦ _ ⟧} (con eps m refl) = m
+∙ˢ-comp {ε}       {_ *}   (con eps m refl) = m
+∙ˢ-comp {ε}       {_ + _} (con eps m refl) = m
+∙ˢ-comp {ε}       {_ ∙ _} (con eps m refl) = m
+∙ˢ-comp {ε}       {_ & _} (con eps m refl) = m
+∙ˢ-comp {⟦ _ ⟧}   {∅}     (con m () _) 
+∙ˢ-comp {⟦ c ⟧}   {ε}     (con {s} m eps refl) = subst (_~_ ⟦ c ⟧) (sym (++-identityʳ s))  m
 ∙ˢ-comp {⟦ _ ⟧}   {⟦ _ ⟧} m = m
 ∙ˢ-comp {⟦ _ ⟧}   {_ *}   m = m
 ∙ˢ-comp {⟦ _ ⟧}   {_ + _} m = m
 ∙ˢ-comp {⟦ _ ⟧}   {_ ∙ _} m = m
 ∙ˢ-comp {⟦ _ ⟧}   {_ & _} m = m
-∙ˢ-comp {_ *}     {∅}     (con m ())
-∙ˢ-comp {r *}     {ε}     (con {s} m eps) = subst ((_~_ (r *))) (sym (++-identityʳ s)) m
+∙ˢ-comp {_ *}     {∅}     (con m () _)
+∙ˢ-comp {r *}     {ε}     (con {s} m eps refl) = subst ((_~_ (r *))) (sym (++-identityʳ s)) m
 ∙ˢ-comp {_ *}     {⟦ _ ⟧} m = m
 ∙ˢ-comp {_ *}     {_ *}   m = m
 ∙ˢ-comp {_ *}     {_ + _} m = m
 ∙ˢ-comp {_ *}     {_ ∙ _} m = m
 ∙ˢ-comp {_ *}     {_ & _} m = m
-∙ˢ-comp {_ + _}   {∅}     (con m ())
-∙ˢ-comp {l1 + l2} {ε}     (con {s} m eps) = subst (_~_ (l1 + l2)) (sym (++-identityʳ s)) m
+∙ˢ-comp {_ + _}   {∅}     (con m () _)
+∙ˢ-comp {l1 + l2} {ε}     (con {s} m eps refl) = subst (_~_ (l1 + l2)) (sym (++-identityʳ s)) m
 ∙ˢ-comp {_ + _}   {⟦ _ ⟧} m = m
 ∙ˢ-comp {_ + _}   {_ *}   m = m
 ∙ˢ-comp {_ + _}   {_ + _} m = m
 ∙ˢ-comp {_ + _}   {_ ∙ _} m = m
 ∙ˢ-comp {_ + _}   {_ & _} m = m
-∙ˢ-comp {_ ∙ _}   {∅}     (con m ())
-∙ˢ-comp {l1 ∙ l2} {ε}     (con {s} m eps) = subst (_~_ (l1 ∙ l2)) (sym (++-identityʳ s)) m
+∙ˢ-comp {_ ∙ _}   {∅}     (con m () _)
+∙ˢ-comp {l1 ∙ l2} {ε}     (con {s} m eps refl) = subst (_~_ (l1 ∙ l2)) (sym (++-identityʳ s)) m
 ∙ˢ-comp {_ ∙ _}   {⟦ x ⟧} m = m
 ∙ˢ-comp {_ ∙ _}   {_ *}   m = m
 ∙ˢ-comp {_ ∙ _}   {_ + _} m = m
 ∙ˢ-comp {_ ∙ _}   {_ ∙ _} m = m
 ∙ˢ-comp {_ ∙ _}   {_ & _} m = m
-∙ˢ-comp {_ & _}   {∅}     (con m ())
-∙ˢ-comp {l1 & l2} {ε}     (con {s} m eps) = subst (_~_ (l1 & l2)) (sym (++-identityʳ s)) m
+∙ˢ-comp {_ & _}   {∅}     (con m () _)
+∙ˢ-comp {l1 & l2} {ε}     (con {s} m eps refl) = subst (_~_ (l1 & l2)) (sym (++-identityʳ s)) m
 ∙ˢ-comp {_ & _}   {⟦ _ ⟧} m = m
 ∙ˢ-comp {_ & _}   {_ *}   m = m
 ∙ˢ-comp {_ & _}   {_ + _} m = m
